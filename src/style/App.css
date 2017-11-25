@@ -1,0 +1,70 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+html, body, .root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  line-height: 1.5;
+}
+body, .app {
+  background: #f5f5f5;
+}
+
+.header-title {
+  padding: 10px 0;
+  background: #EFD88E;
+  text-align: center;
+}
+
+.header-title h1 {
+  font-weight: 400;
+  margin: 0;
+  color: black;
+}
+
+.category-content {
+  padding: 0 20px 40px;
+}
+
+.post-content {
+  margin: 20px 10px 20px;
+}
+
+.post-vote-content {
+    width: 60px;
+    display: block;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.icon-btn-vote {
+  background: none;
+  border: none;
+}
+
+.post-voteScore {
+  margin: 0;
+}
+
+.post-detail-content {
+  display: flex;
+}
+
+.new-post {
+  position: absolute;
+  right: 25px;
+}
+
+.sort {
+  display: flex;
+  position: absolute;
+  right: 100px;
+}
