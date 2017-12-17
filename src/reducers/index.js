@@ -1,43 +1,14 @@
 import { combineReducers } from 'redux';
-import {
-  FETCH_CATEGORIES,
-  FETCH_POSTS
-} from '../actions/types';
-
-const initialCategoriesState = {
-    'react': {
-      name: 'react',
-      path: 'react',
-    },
-    'redux': {
-      name: 'redux',
-      path: 'redux',
-    },
-    'udacity': {
-      name: 'udacity',
-      path: 'udacity',
-    },
-}
-
-const categories = (state = {}, action) => {
-  switch (action.type) {
-    case FETCH_CATEGORIES:
-      return action.categories;
-    default:
-      return state;
-  }
-}
-
-const posts = (state = {}, action) => {
-  switch (action.type) {
-    case FETCH_POSTS:
-      return action.posts;
-    default:
-      return state;
-  }
-}
+import * as categoriesReducer from './categories'
+import * as postsReducer from './posts';
+import * as commentReducer from './comments'
+import sort from './sort';
+import payload from './payload'
 
 export default combineReducers({
-  categories,
-  posts
+  categories: categoriesReducer.categories,
+  posts: postsReducer.posts,
+  comments: commentReducer.comments,
+  sort,
+  payload,
 });

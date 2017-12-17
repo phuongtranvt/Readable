@@ -1,2 +1,22 @@
 export const FETCH_CATEGORIES = "FETCH_CATEGORIES";
+
 export const FETCH_POSTS = "FETCH_POSTS";
+export const FETCH_POST = "FETCH_POST";
+export const POST_UP_VOTE = "POST_UP_VOTE";
+export const POST_DOWN_VOTE = "POST_DOWN_VOTE";
+export const DELETE_POST = "DELETE_POST";
+export const UPDATE_POST = "UPDATE_POST";
+export const CREATE_POST = "CREATE_POST";
+
+export const SET_SORT_BY = "SET_SORT_BY";
+export const TOGGLE_SORT_ORDER = "TOGGLE_SORT_ORDER";
+
+export const FETCH_COMMENTS = "FETCH_COMMENTS";
+export const COMMENT_UP_VOTE = "COMMENT_UP_VOTE";
+export const COMMENT_DOWN_VOTE = "COMMENT_DOWN_VOTE";
+export const UPDATE_COMMENT = "UPDATE_COMMENT";
+export const CREATE_COMMENT = "CREATE_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+
+export const SET_ERROR = "SET_ERROR";
+export const LOADING_DATA = "REQUEST_DATA"
