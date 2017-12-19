@@ -12,11 +12,25 @@ class CommentForm extends Component {
     this.state = {
       author: editingComment ? editingComment.author : '',
       body: editingComment ? editingComment.body : '',
+
+      touched: {
+        author: false,
+        body: false,
+      }
     }
   }
 
+  getErrorList = () => ({
+    author: this.state.author.length === 0,
+    body: this.state.body.length === 0,
+  })
+
   handleSubmitComment = (e) => {
     e.preventDefault();
+
+    if (!this.canSubmit()) {
+      return;
+    }
 
     const {editingComment, parentId, updateComment, createComment} = this.props;
 
@@ -34,15 +48,42 @@ class CommentForm extends Component {
     }
   }
 
+  canSubmit = () => {
+    const errors = this.getErrorList();
+    const isSubmitDisable = Object.keys(errors).some(x => errors[x]);
+    return !isSubmitDisable;
+  }
+
   handleInputChange = (e) => {
     this.setState({[e.target.name]: e.target.value})
   }
 
+  handleBlur = field => e => {
+    this.setState(preState => ({
+      touched: {...preState.touched, [field]: true}
+    }))
+  }
+
   resetForm = () => {
-    this.setState({author: '', body: ''})
+    this.setState({
+      author: '',
+      body: '',
+      touched: {
+        author: false,
+        body: false,
+      }
+    })
   }
 
   render() {
+    const errors = this.getErrorList();
+    const isSubmitDisable = Object.keys(errors).some(x => errors[x]);
+    const isResetDisable = this.state.author.length === 0
+                            && this.state.body.length === 0
+
+
+    const shouldMarkError = field => errors[field] && this.state.touched[field];
+
     const {editingComment, onSubmitCB, onCancel} = this.props;
 
     return (
@@ -58,33 +99,43 @@ class CommentForm extends Component {
           }}>
 
           {!editingComment && (
-            <input  type="text" className="text-input"
+            <input  type="text"
                     name="author" placeholder="Author"
+                    className={shouldMarkError('author') ? "error" : ""}
                     value={this.state.author}
-                    onChange={this.handleInputChange}/>
+                    onChange={this.handleInputChange}
+                    onBlur={this.handleBlur('author')}
+            />
           )}
 
           <div className="comment__edit-body">
             <textarea type="text" name="body" placeholder="Write a comment..."
-                      className="textarea-input"
+                      className={shouldMarkError('body') ? "error" : ""}
                       value={this.state.body}
-                      onChange={this.handleInputChange} />
+                      onChange={this.handleInputChange}
+                      onBlur={this.handleBlur('body')}
+            />
           </div>
 
-          <button className="button" type="submit">
+          <button className="button" type="submit"
+                  disabled={isSubmitDisable}
+          >
             Submit
           </button>
 
           {editingComment
             ? (
                 <button className="button" type="button"
-                        onClick={onCancel}  >
+                        onClick={onCancel}
+                >
                   Cancel
                 </button>
               )
             : (
               <button className="button" type="button"
-                      onClick={this.resetForm}  >
+                      onClick={this.resetForm}
+                      disabled={isResetDisable}
+              >
                 Reset
               </button>
             )

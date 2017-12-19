@@ -8,8 +8,48 @@ import {Link} from 'react-router-dom';
 import {createPost, updatePost, fetchAllCategories} from '../actions'
 
 class PostForm extends Component {
+  constructor(props) {
+    super(props);
+
+    const {editingPost} = props;
+    this.state = {
+      category: editingPost ? editingPost.category : 'none',
+      author: editingPost ? editingPost.author : '',
+      title: editingPost ? editingPost.title : '',
+      body: editingPost ? editingPost.body : '',
+
+      touched: {
+        category: false,
+        author: false,
+        title: false,
+        body: false,
+      }
+    }
+  }
+
+  getErrorList = () => ({
+    category: this.state.category === 'none',
+    author: this.state.author.length === 0,
+    title: this.state.title.length === 0,
+    body: this.state.body.length === 0,
+  })
+
+  handleInputChange = e => {
+    this.setState({[e.target.name]: e.target.value})
+  }
+
+  handleBlur = field => e => {
+    this.setState(preState => ({
+      touched: {...preState.touched, [field]: true}
+    }))
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!this.canSubmit()) {
+      return;
+    }
 
     const {editingPost, updatePost, createPost} = this.props;
 
@@ -26,6 +66,12 @@ class PostForm extends Component {
     }
   }
 
+  canSubmit = () => {
+    const errors = this.getErrorList();
+    const isSubmitDisable = Object.keys(errors).some(field => errors[field]);
+    return !isSubmitDisable;
+  }
+
   componentDidMount() {
     const {categories, fetchAllCategories} = this.props;
 
@@ -35,7 +81,11 @@ class PostForm extends Component {
   }
 
   render() {
-    console.log('create post render', this.props)
+    const errors = this.getErrorList();
+    const isSubmitDisable = Object.keys(errors).some(field => errors[field]);
+
+    const shouldMarkError = (field) => errors[field] && this.state.touched[field];
+
     const {categories, isEdit, editingPost} = this.props;
     return (
       <div>
@@ -45,31 +95,46 @@ class PostForm extends Component {
             this.props.history.goBack();
           }}
           className="create-post-form">
-          <select
-            name="category"
-            defaultValue={editingPost ? editingPost.category : "none"}
+          <select name="category"
+                  value={this.state.category}
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleBlur('category')}
+                  className={shouldMarkError('category') ? "error" : ""}
           >
             <option value="none" disabled>Select category...</option>
             {categories && categories.map(category => (
               <option key={category} value={category}>{capitalize(category)}</option>
             ))}
           </select>
-          <input
-            type='text' name='author' placeholder='Author' className="text-input"
-            defaultValue={editingPost ? editingPost.author : ''}
-            readOnly={editingPost}
+          <input  type='text' name='author' placeholder='Author'
+                  className={shouldMarkError('author') ? "error" : ""}
+                  value={this.state.author}
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleBlur('author')}
+                  readOnly={editingPost}
           />
-          <input
-            type='text' name='title' placeholder='Title' className="text-input"
-            defaultValue={editingPost ? editingPost.title : ''}/>
+          <input  type='text' name='title' placeholder='Title'
+                  className={shouldMarkError('title') ? "error" : ""}
+                  value={this.state.title}
+                  onChange={this.handleInputChange}
+                  onBlur={this.handleBlur('title')}
+          />
 
           <div className="create-post__body">
-            <textarea
-              type='text' name='body' placeholder='Body' className="textarea-input"
-              defaultValue={editingPost ? editingPost.body : ''}/>
+            <textarea type='text' name='body' placeholder='Body'
+                      className={shouldMarkError('body') ? "error" : ""}
+                      value={this.state.body}
+                      onChange={this.handleInputChange}
+                      onBlur={this.handleBlur('body')}
+            />
           </div>
 
-          <button className = "button" type="submit">Submit</button>
+          <button className = "button" type="submit"
+                  disabled={isSubmitDisable}
+          >
+            Submit
+          </button>
+
           <Link to="/">
             <button className = "button">
               Cancel
