@@ -1,5 +1,5 @@
 import {
-  FETCH_COMMENTS,
+  RECEIVE_COMMENTS,
   COMMENT_UP_VOTE,
   COMMENT_DOWN_VOTE,
   UPDATE_COMMENT,
@@ -34,7 +34,7 @@ const comment = (state = {}, action) => {
 
 export const comments = (state = {}, action) => {
   switch (action.type) {
-    case FETCH_COMMENTS:
+    case RECEIVE_COMMENTS:
       return action.comments;
     case UPDATE_COMMENT:
     case CREATE_COMMENT:

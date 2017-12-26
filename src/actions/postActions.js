@@ -1,44 +1,50 @@
 import * as ReadableAPI from '../utils/ReadableAPI';
 import {
-  FETCH_POSTS,
-  FETCH_POST,
+  RECEIVE_POSTS,
+  RECEIVE_POST,
   POST_UP_VOTE,
   POST_DOWN_VOTE,
   DELETE_POST,
   UPDATE_POST,
   CREATE_POST,
+  POSTS_LOADING_DATA,
+  POST_DETAIL_LOADING_DATA,
 } from './types';
-import {setErrorAction} from './payloadActions'
+import {setErrorAction, startLoadDataAction} from './payloadActions'
 
 const receiveAllPost = (posts) => ({
-  type: FETCH_POSTS,
+  type: RECEIVE_POSTS,
   posts,
 })
 
 const receivePost = (post) => ({
-  type: FETCH_POST,
+  type: RECEIVE_POST,
   post
 })
 
-export const fetchAllPosts = () => dispatch => (
-  ReadableAPI.getAllPosts()
-    .then(res => {
+export const fetchAllPosts = () => dispatch => {
+    dispatch(startLoadDataAction(POSTS_LOADING_DATA));
 
-      const posts = res.reduce((acc, post) => {
-        acc[post.id] = post;
-        return acc;
-      }, {});
+    ReadableAPI.getAllPosts()
+      .then(res => {
 
-      dispatch(receiveAllPost(posts));
-    })
-    .catch((e) => dispatch(setErrorAction(`Error at fetchAllPosts: ${e.message}`)))
-)
+        const posts = res.reduce((acc, post) => {
+          acc[post.id] = post;
+          return acc;
+        }, {});
 
-export const fetchPost = (postId) => dispatch => (
+        dispatch(receiveAllPost(posts));
+      })
+      .catch((e) => dispatch(setErrorAction(`Error at fetchAllPosts: ${e.message}`)))
+}
+
+export const fetchPost = (postId) => dispatch => {
+  dispatch(startLoadDataAction(POST_DETAIL_LOADING_DATA));
+
   ReadableAPI.getPost(postId)
     .then(res => dispatch(receivePost(res)))
     .catch((e) => dispatch(setErrorAction(`Error at fetchPost: ${e.message}`)))
-)
+}
 
 export const postUpVote = (postId) => dispatch => (
   ReadableAPI.postUpVote(postId)

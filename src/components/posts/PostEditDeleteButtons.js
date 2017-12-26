@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router'
-import {deletePost} from '../actions'
+import PropTypes from 'prop-types'
+import {deletePost} from '../../actions'
 import {Link} from 'react-router-dom'
 import DeleteIcon from 'react-icons/lib/md/delete';
 
@@ -23,5 +24,9 @@ const PostEditDeleteButtons = ({id, deletePost, history, match}) => (
 const mapDispatchToProps = (dispatch, ownProps) => ({
   deletePost: (id) => dispatch(deletePost(id)),
 })
+
+PostEditDeleteButtons.propTypes = {
+  id: PropTypes.string.isRequired,
+};
 
 export default withRouter(connect(null, mapDispatchToProps)(PostEditDeleteButtons));

@@ -1,6 +1,6 @@
 import {
-  FETCH_POSTS,
-  FETCH_POST,
+  RECEIVE_POSTS,
+  RECEIVE_POST,
   UPDATE_POST,
   DELETE_POST,
   CREATE_POST,
@@ -10,7 +10,7 @@ import {
 
 const post = (state = {}, action) => {
   switch (action.type) {
-    case FETCH_POST:
+    case RECEIVE_POST:
     case UPDATE_POST:
     case CREATE_POST:
       return action.post;
@@ -36,9 +36,9 @@ const post = (state = {}, action) => {
 
 export const posts = (state = {}, action) =>  {
   switch (action.type) {
-    case FETCH_POSTS:
+    case RECEIVE_POSTS:
       return action.posts;
-    case FETCH_POST:
+    case RECEIVE_POST:
     case UPDATE_POST:
     case CREATE_POST:
       return {

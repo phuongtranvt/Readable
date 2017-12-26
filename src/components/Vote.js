@@ -1,5 +1,5 @@
 import React from 'react';
-
+import PropTypes from 'prop-types'
 import ArrowUpIcon from 'react-icons/lib/ti/arrow-sorted-up';
 import ArrowDownIcon from 'react-icons/lib/ti/arrow-sorted-down';
 
@@ -20,5 +20,14 @@ const Vote = ({id, voteScore, onUpVote, onDownVote, size}) => (
         </button>
     </div>
 )
+
+Vote.propTypes = {
+  id: PropTypes.string.isRequired,
+  voteScore: PropTypes.number.isRequired,
+  onUpVote: PropTypes.func.isRequired,
+  onDownVote: PropTypes.func.isRequired,
+  size: PropTypes.number.isRequired,
+};
+
 
 export default Vote;

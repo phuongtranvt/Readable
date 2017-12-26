@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import {connect} from'react-redux'
 import {withRouter} from 'react-router'
+import PropTypes from 'prop-types'
 import uuidv1 from 'uuid'
-import {capitalize} from '../utils/helpers';
+import {capitalize} from '../../utils/helpers';
 import {Link} from 'react-router-dom';
-import {createPost, updatePost, fetchAllCategories} from '../actions'
+import {createPost, updatePost, fetchAllCategories} from '../../actions'
 
 class PostForm extends Component {
   constructor(props) {
@@ -86,7 +87,7 @@ class PostForm extends Component {
 
     const shouldMarkError = (field) => errors[field] && this.state.touched[field];
 
-    const {categories, isEdit, editingPost} = this.props;
+    const {categories, editingPost} = this.props;
     return (
       <div>
         <form
@@ -155,5 +156,9 @@ const mapDispatchToProps = (dispatch) => ({
   updatePost: (value) => dispatch(updatePost(value)),
   fetchAllCategories: () => dispatch(fetchAllCategories()),
 })
+
+PostForm.propTypes = {
+  editingPost: PropTypes.object,
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostForm))

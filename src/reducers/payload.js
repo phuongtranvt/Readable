@@ -1,23 +1,16 @@
 import {combineReducers} from 'redux'
 import {
-  FETCH_CATEGORIES,
+  RECEIVE_CATEGORIES,
 
-  FETCH_POSTS,
-  FETCH_POST,
-  POST_UP_VOTE,
-  POST_DOWN_VOTE,
-  DELETE_POST,
-  UPDATE_POST,
-  CREATE_POST,
+  RECEIVE_POSTS,
+  RECEIVE_POST,
 
-  FETCH_COMMENTS,
-  COMMENT_UP_VOTE,
-  COMMENT_DOWN_VOTE,
-  UPDATE_COMMENT,
-  CREATE_COMMENT,
-  DELETE_COMMENT,
+  RECEIVE_COMMENTS,
 
-  LOADING_DATA,
+  CATEGORIES_LOADING_DATA,
+  POSTS_LOADING_DATA,
+  POST_DETAIL_LOADING_DATA,
+  COMMENTS_LOADING_DATA,
   SET_ERROR,
 } from '../actions/types';
 
@@ -30,33 +23,56 @@ const error = (state = '', action) => {
   }
 }
 
-const isFetching = (state = false, action) => {
+const isCategoryFetching = (state = false, action) => {
   switch (action.type) {
-    case LOADING_DATA:
+    case CATEGORIES_LOADING_DATA:
       return true;
-    case FETCH_CATEGORIES:
-    case FETCH_POSTS:
-    case FETCH_POST:
-    case POST_UP_VOTE:
-    case POST_DOWN_VOTE:
-    case DELETE_POST:
-    case UPDATE_POST:
-    case CREATE_POST:
-    case FETCH_COMMENTS:
-    case COMMENT_UP_VOTE:
-    case COMMENT_DOWN_VOTE:
-    case UPDATE_COMMENT:
-    case CREATE_COMMENT:
-    case DELETE_COMMENT:
+    case RECEIVE_CATEGORIES:
       return false;
 
     default:
       return state;
+  }
+}
 
+const isPostsFetching = (state = false, action) => {
+  switch (action.type) {
+    case POSTS_LOADING_DATA:
+      return true;
+    case RECEIVE_POSTS:
+      return false;
+
+    default:
+      return state;
+  }
+}
+
+const isPostDetailFetching = (state = false, action) => {
+  switch (action.type) {
+    case POST_DETAIL_LOADING_DATA:
+      return true;
+    case RECEIVE_POST:
+      return false;
+    default:
+      return state;
+  }
+}
+
+const isCommentsFetching = (state = false, action) => {
+  switch (action.type) {
+    case COMMENTS_LOADING_DATA:
+      return true;
+    case RECEIVE_COMMENTS:
+      return false;
+    default:
+      return state;
   }
 }
 
 export default combineReducers({
   error,
-  isFetching,
+  isCategoryFetching,
+  isPostsFetching,
+  isPostDetailFetching,
+  isCommentsFetching
 })

@@ -3,14 +3,13 @@ import {connect} from 'react-redux';
 import {
   fetchComments,
   deleteCommentAction,
-  startLoadDataAction
-} from '../actions';
+} from '../../actions';
 import {withRouter} from 'react-router'
 import sortByValue from 'sort-by';
 import Loading from 'react-loading'
-import {formatDate} from '../utils/helpers';
+import {formatDate} from '../../utils/helpers';
 import CommentVote from './CommentVote'
-import Sort from './Sort'
+import Sort from '../Sort'
 import CommentEdit from './CommentEdit';
 import CommentEditDeleteButtons from './CommentEditDeleteButtons';
 
@@ -35,7 +34,6 @@ class CommentList extends Component {
   }
 
   componentDidMount() {
-    this.props.startLoadData();
     this.props.fetchComments(this.props.match.params.postId);
   }
 
@@ -53,9 +51,6 @@ class CommentList extends Component {
 
           <div className="comment-body-inner">
             <div className="comment__meta">
-              <div className="comment__user-image">
-              </div>
-
               <div className="comment__meta-info">
                 <div className="comment-title-header">
                   <span className="comment__user-name">{comment.author}</span>
@@ -118,13 +113,12 @@ const getVisibleComments = (
 
 const mapStateToProps = ({comments, sort, payload}, ownProps) => ({
   comments: getVisibleComments(comments, sort.sortBy, sort.isSortDescending, ownProps),
-  isFetching: payload.isFetching,
+  isFetching: payload.isCommentsFetching,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   fetchComments: (postId) => dispatch(fetchComments(postId)),
   deleteComment: id => dispatch(deleteCommentAction(id)),
-  startLoadData: () => dispatch(startLoadDataAction()),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentList));

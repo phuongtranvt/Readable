@@ -1,5 +1,4 @@
 import {
-  LOADING_DATA,
   SET_ERROR
 } from './types'
 
@@ -8,6 +7,6 @@ export const setErrorAction = (error) => ({
   error,
 })
 
-export const startLoadDataAction = () => ({
-  type: LOADING_DATA,
+export const startLoadDataAction = (type) => ({
+  type: type,
 })

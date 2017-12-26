@@ -24,8 +24,6 @@ const customFetch = (url, options) => {
   })
 }
 
-const delay = (ms) =>
-  new Promise(resolve => setTimeout(resolve, ms))
 
 export const getAllCategories = () => (
   customFetch(`${api}/categories`, {headers})
@@ -150,3 +148,8 @@ export const deleteComment = (id) => (
     headers,
   })
 )
+
+/*
+const delay = (ms) =>
+  new Promise(resolve => setTimeout(resolve, ms));
+*/

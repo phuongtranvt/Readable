@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import {connect} from'react-redux';
+import PropTypes from 'prop-types'
 import uuidv1 from 'uuid';
-import {updateCommentAction, createCommentAction} from '../actions'
+import {updateCommentAction, createCommentAction} from '../../actions'
 
 class CommentForm extends Component {
   constructor(props) {
@@ -153,5 +154,11 @@ const mapDispatchToProps = (dispatch) => ({
   createComment: (comment) => dispatch(createCommentAction(comment))
 })
 
+CommentForm.propTypes = {
+  editingComment: PropTypes.object,
+  onSubmitCB: PropTypes.func,
+  onCancel: PropTypes.func,
+  parentId: PropTypes.string,
+};
 
 export default connect(null, mapDispatchToProps)(CommentForm);

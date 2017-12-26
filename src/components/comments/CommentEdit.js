@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import CommentForm from './CommentForm'
 
 const CommentEdit = ({
@@ -11,5 +12,11 @@ const CommentEdit = ({
                 onCancel={onCancel}
   />
 )
+
+CommentEdit.propTypes = {
+  editingComment: PropTypes.object.isRequired,
+  onSubmitCB: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+}
 
 export default CommentEdit

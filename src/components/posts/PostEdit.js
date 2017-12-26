@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import {fetchPost} from '../actions'
+import {fetchPost} from '../../actions'
 import PostForm from './PostForm'
 
 class PostEdit extends Component {

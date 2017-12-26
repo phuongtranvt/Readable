@@ -1,20 +1,23 @@
 import * as ReadableAPI from '../utils/ReadableAPI';
 import {
-  FETCH_COMMENTS,
+  RECEIVE_COMMENTS,
   COMMENT_UP_VOTE,
   COMMENT_DOWN_VOTE,
   UPDATE_COMMENT,
   CREATE_COMMENT,
   DELETE_COMMENT,
+  COMMENTS_LOADING_DATA,
 } from './types';
-import {setErrorAction} from './payloadActions'
+import {setErrorAction, startLoadDataAction} from './payloadActions'
 
 const receiveComments = (comments) => ({
-  type: FETCH_COMMENTS,
+  type: RECEIVE_COMMENTS,
   comments,
 })
 
-export const fetchComments = (postId) => dispatch => (
+export const fetchComments = (postId) => dispatch => {
+  dispatch(startLoadDataAction(COMMENTS_LOADING_DATA));
+
   ReadableAPI.getComments(postId)
     .then(res => {
 
@@ -26,7 +29,7 @@ export const fetchComments = (postId) => dispatch => (
       dispatch(receiveComments(comments));
     })
     .catch((e) => dispatch(setErrorAction(`Error at fetchComments: ${e.message}`)))
-)
+}
 
 export const commentUpVote = (commentId) => dispatch => (
   ReadableAPI.commentUpVote(commentId)

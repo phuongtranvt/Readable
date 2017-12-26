@@ -1,69 +1,33 @@
 import React from 'react';
 import '../style/App.css'
-import {Route, Switch, Link} from 'react-router-dom';
-import FilteredPostsTab from './FilteredPostsTab';
-import PostDetail from './PostDetail';
-import PostNew from './PostNew'
-import PostEdit from './PostEdit'
+import {Route, Switch} from 'react-router-dom';
+import ReadableMainDrawer from './ReadableMainDrawer';
 import ErrorBoundary from './ErrorBoundary'
+import PostListContainer from './posts/PostListContainer'
+import PostDetail from './posts/PostDetail';
+import PostNew from './posts/PostNew'
+import PostEdit from './posts/PostEdit'
 
-export default class Example extends React.Component {
-  state = {
-    activeTab: '1',
-    showCategory: true,
-    showPostDetails: false,
-  };
-
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
-  }
-
+export default class App extends React.Component {
   render() {
     return (
       <div>
-        <div className="header-title">
-          <h1>
-            <Link to="/">Readable</Link>
-          </h1>
-        </div>
-
-        <div>
-          <ErrorBoundary>
+        <ErrorBoundary>
+          <ReadableMainDrawer>
             <Switch>
-              <Route exact path='/' component={FilteredPostsTab} />
-              <Route
-                exact path='/post/create'
-                component={PostNew}
-              />
-              <Route
-                exact path='/post/edit/:postId'
-                component={PostEdit}
-              />
-              <Route exact path='/:category' component={FilteredPostsTab} />
+              <Route exact path='/' component={PostListContainer} />
+              <Route  exact path='/post/create'
+                      component={PostNew} />
+
+              <Route  exact path='/post/edit/:postId'
+                      component={PostEdit} />
+
+              <Route exact path='/:category' component={PostListContainer} />
               <Route exact path='/:category/:postId' component={PostDetail}/>
             </Switch>
-          </ErrorBoundary>
-        </div>
+          </ReadableMainDrawer>
+        </ErrorBoundary>
       </div>
     );
   }
 }
-
-/*
-<Route
-  exact path='/post/create'
-  component={PostNewEditForm}
-/>
-<Route
-  exact path='/post/edit/:postId'
-  render={({history, match}) => (
-    <PostNewEditForm
-      history={history} match={match}
-      isEdit={true}/>
-  )}
-/>
-*/

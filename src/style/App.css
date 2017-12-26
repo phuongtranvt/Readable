@@ -81,9 +81,7 @@ body, .app {
 
 .post-detail-content {
   display: flex;
-  padding: 20px;
   max-width: 1200px;
-  margin: 10px auto;
 }
 
 .detail-author{
@@ -264,8 +262,7 @@ textarea.error {
 }
 
 .sort-post {
-  position: absolute;
-  right: 70px;
+  margin: 10px;
 }
 
 .icon-btn {

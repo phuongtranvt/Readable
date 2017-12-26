@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import CommentForm from './CommentForm'
 
 const CommentNew = ({parentId}) => (
@@ -9,5 +10,9 @@ const CommentNew = ({parentId}) => (
       <CommentForm parentId={parentId}/>
     </div>
 )
+
+CommentNew.propTypes = {
+  parentId: PropTypes.string,
+};
 
 export default CommentNew

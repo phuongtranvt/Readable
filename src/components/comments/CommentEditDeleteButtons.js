@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import DeleteIcon from 'react-icons/lib/md/delete';
 
 const CommentEditDeleteButtons = ({
@@ -14,5 +15,11 @@ const CommentEditDeleteButtons = ({
     </button>
   </div>
 )
+
+CommentEditDeleteButtons.propTypes = {
+  id: PropTypes.string.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+}
 
 export default CommentEditDeleteButtons;
