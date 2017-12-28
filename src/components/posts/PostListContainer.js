@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {createSelector} from 'reselect';
 import sortByValue from 'sort-by';
 import {Link} from 'react-router-dom';
 import {withRouter} from 'react-router'
@@ -12,13 +13,15 @@ import {capitalize} from '../../utils/helpers';
 import PostList from './PostList'
 import Sort from '../Sort';
 
+let count = 0;
+
 class PostListContainer extends Component {
   componentDidMount() {
     this.props.fetchAllPosts();
   }
 
   render() {
-    console.log('in PostList render', this.props);
+    console.log(`in PostList render ${count++}`);
     const {isFetching, posts} = this.props;
     const {match} = this.props;
     const category = match.params && match.params.category
@@ -50,32 +53,42 @@ class PostListContainer extends Component {
   }
 }
 
-const getVisiblePosts = (
-  posts,
-  sortBy,
-  isSortDescending,
-  ownProps
-) => {
-  const selectedCategory = ownProps.match.params.category;
-  let result = Object.values(posts).filter((post) => !post.deleted);
+const makeGetVisiblePosts = () => (
+    createSelector (
+      (state, ownProps) => ownProps.match.params.category,
+      state => state.posts,
+      state => state.sort.sortBy,
+      state => state.sort.isSortDescending,
 
-  result = selectedCategory
-          ? result.filter((post) => post.category === selectedCategory)
-          : result;
+      (selectedCategory, posts, sortBy, isSortDescending) => {
+        let result = Object.values(posts).filter((post) => !post.deleted);
 
-  const sortByStr = isSortDescending ? `-${sortBy}` : sortBy;
-  result.sort(sortByValue(sortByStr));
+        result = selectedCategory
+                ? result.filter((post) => post.category === selectedCategory)
+                : result;
 
-  return result;
-};
+        const sortByStr = isSortDescending ? `-${sortBy}` : sortBy;
+        result.sort(sortByValue(sortByStr));
 
-const mapStateToProps = ({posts, sort, payload}, ownProps) => ({
-  posts: getVisiblePosts(posts, sort.sortBy, sort.isSortDescending, ownProps),
-  isFetching: payload.isPostsFetching,
-})
+        return result;
+    }
+  )
+)
+
+const makeMapStateToProps = () => {
+  const getVisiblePosts = makeGetVisiblePosts()
+  const mapStateToProps = (state, ownProps) => {
+    return {
+      posts: getVisiblePosts(state, ownProps),
+      isFetching: state.payload.isPostsFetching,
+    }
+  }
+
+  return mapStateToProps;
+}
 
 const mapDispatchToProps = (dispatch) => ({
   fetchAllPosts: () => dispatch(fetchAllPosts()),
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostListContainer));
+export default withRouter(connect(makeMapStateToProps, mapDispatchToProps)(PostListContainer));

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {createSelector} from 'reselect';
 import {
   fetchComments,
   deleteCommentAction,
@@ -12,6 +13,8 @@ import CommentVote from './CommentVote'
 import Sort from '../Sort'
 import CommentEdit from './CommentEdit';
 import CommentEditDeleteButtons from './CommentEditDeleteButtons';
+
+let countCommentList = 0;
 
 class CommentList extends Component {
   state = {
@@ -84,6 +87,7 @@ class CommentList extends Component {
   )
 
   render() {
+    console.log(`CommentList render ${countCommentList++}`)
     const {comments, isFetching} = this.props;
     return (
       <div className="comments-content">
@@ -97,23 +101,24 @@ class CommentList extends Component {
   }
 }
 
-const getVisibleComments = (
-  comments,
-  sortBy,
-  isSortDescending,
-  ownProps
-) => {
-  let result = Object.values(comments).filter((comment) => !comment.deleted);
+const getVisibleComments = createSelector(
+    state => state.comments,
+    state => state.sortBy,
+    state => state.sort.isSortDescending,
 
-  const sortByStr = isSortDescending ? `-${sortBy}` : sortBy;
-  result.sort(sortByValue(sortByStr));
+    (comments, sortBy, isSortDescending) => {
+      let result = Object.values(comments).filter((comment) => !comment.deleted);
 
-  return result;
-};
+      const sortByStr = isSortDescending ? `-${sortBy}` : sortBy;
+      result.sort(sortByValue(sortByStr));
 
-const mapStateToProps = ({comments, sort, payload}, ownProps) => ({
-  comments: getVisibleComments(comments, sort.sortBy, sort.isSortDescending, ownProps),
-  isFetching: payload.isCommentsFetching,
+      return result;
+    }
+)
+
+const mapStateToProps = (state, ownProps) => ({
+  comments: getVisibleComments(state),
+  isFetching: state.payload.isCommentsFetching,
 })
 
 const mapDispatchToProps = (dispatch) => ({
