@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {compose} from 'redux'
 import {withRouter} from 'react-router'
 import PropTypes from 'prop-types'
 import {deletePost} from '../../actions'
@@ -21,12 +22,13 @@ const PostEditDeleteButtons = ({id, deletePost, history, match}) => (
   </div>
 )
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  deletePost: (id) => dispatch(deletePost(id)),
-})
+const mapDispatchToProps = {deletePost}
 
 PostEditDeleteButtons.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(PostEditDeleteButtons));
+export default compose (
+  withRouter,
+  connect(null, mapDispatchToProps)
+)(PostEditDeleteButtons)

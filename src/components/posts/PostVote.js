@@ -14,10 +14,7 @@ const PostVote = ({post, postUpVote, postDownVote}) => (
   />
 )
 
-const mapDispatchToProps = (dispatch) => ({
-  postUpVote: (postId) => dispatch(postUpVote(postId)),
-  postDownVote: (postId) => dispatch(postDownVote(postId)),
-})
+const mapDispatchToProps = {postUpVote, postDownVote}
 
 PostVote.propTypes = {
   post: PropTypes.object.isRequired,

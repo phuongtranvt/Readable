@@ -14,10 +14,7 @@ const CommentVote = ({comment, commentUpVote, commentDownVote}) => (
   />
 )
 
-const mapDispatchToProps = (dispatch) => ({
-  commentUpVote: (id) => dispatch(commentUpVote(id)),
-  commentDownVote: (id) => dispatch(commentDownVote(id)),
-})
+const mapDispatchToProps = {commentUpVote, commentDownVote}
 
 CommentVote.propTypes = {
   comment: PropTypes.object.isRequired,

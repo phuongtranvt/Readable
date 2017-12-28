@@ -6,7 +6,7 @@ import PostForm from './PostForm'
 class PostEdit extends Component {
   componentDidMount() {
     if (!this.props.currentPost) {
-      this.props.getCurrentPost(this.props.match.params.postId)
+      this.props.fetchPost(this.props.match.params.postId)
     }
   }
 
@@ -25,8 +25,6 @@ const mapStateToProps = ({posts}, ownProps) => ({
   currentPost: posts[ownProps.match.params.postId]
 })
 
-const mapDispatchToProps = dispatch => ({
-  getCurrentPost: id => dispatch(fetchPost(id))
-})
+const mapDispatchToProps = {fetchPost}
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostEdit)

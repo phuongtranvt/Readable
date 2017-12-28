@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {compose} from 'redux'
 import {createSelector} from 'reselect';
 import {
   fetchComments,
-  deleteCommentAction,
+  deleteComment,
 } from '../../actions';
 import {withRouter} from 'react-router'
 import sortByValue from 'sort-by';
@@ -103,7 +104,7 @@ class CommentList extends Component {
 
 const getVisibleComments = createSelector(
     state => state.comments,
-    state => state.sortBy,
+    state => state.sort.sortBy,
     state => state.sort.isSortDescending,
 
     (comments, sortBy, isSortDescending) => {
@@ -121,9 +122,9 @@ const mapStateToProps = (state, ownProps) => ({
   isFetching: state.payload.isCommentsFetching,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchComments: (postId) => dispatch(fetchComments(postId)),
-  deleteComment: id => dispatch(deleteCommentAction(id)),
-})
+const mapDispatchToProps = {fetchComments, deleteComment}
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentList));
+export default compose (
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(CommentList)

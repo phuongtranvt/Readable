@@ -56,8 +56,6 @@ const mapStateToProps = ({posts, payload}, ownProps) => ({
   isFetching: payload.isPostDetailFetching
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchPost: (postId) => dispatch(fetchPost(postId))
-})
+const mapDispatchToProps = {fetchPost}
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetail);

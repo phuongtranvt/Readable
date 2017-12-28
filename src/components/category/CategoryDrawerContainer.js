@@ -41,8 +41,6 @@ const mapStateToProps = ({categories, payload}) => ({
   isFetching: payload.isCategoryFetching,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchAllCategories: () => dispatch(fetchAllCategories()),
-})
+const mapDispatchToProps = {fetchAllCategories}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryDrawerContainer)

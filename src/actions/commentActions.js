@@ -49,7 +49,7 @@ export const commentDownVote = (commentId) => dispatch => (
     .catch((e) => dispatch(setErrorAction(`Error at commentDownVote: ${e.message}`)))
 )
 
-export const updateCommentAction = (comment) => dispatch => (
+export const updateComment = (comment) => dispatch => (
   ReadableAPI.updateComment(comment)
     .then(res => dispatch({
       type: UPDATE_COMMENT,
@@ -58,7 +58,7 @@ export const updateCommentAction = (comment) => dispatch => (
     .catch((e) => dispatch(setErrorAction(`Error at updateCommentAction: ${e.message}`)))
 )
 
-export const createCommentAction = comment => dispatch => (
+export const createComment = comment => dispatch => (
   ReadableAPI.createComment(comment)
     .then(res => dispatch({
       type: CREATE_COMMENT,
@@ -67,7 +67,7 @@ export const createCommentAction = comment => dispatch => (
     .catch((e) => dispatch(setErrorAction(`Error at createCommentAction: ${e.message}`)))
 )
 
-export const deleteCommentAction = id => dispatch => (
+export const deleteComment = id => dispatch => (
   ReadableAPI.deleteComment(id)
     .then(dispatch({
       type: DELETE_COMMENT,

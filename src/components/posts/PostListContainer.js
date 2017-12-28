@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {compose} from 'redux'
 import {createSelector} from 'reselect';
 import sortByValue from 'sort-by';
 import {Link} from 'react-router-dom';
@@ -87,8 +88,9 @@ const makeMapStateToProps = () => {
   return mapStateToProps;
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchAllPosts: () => dispatch(fetchAllPosts()),
-})
+const mapDispatchToProps = {fetchAllPosts}
 
-export default withRouter(connect(makeMapStateToProps, mapDispatchToProps)(PostListContainer));
+export default compose(
+  withRouter,
+  connect(makeMapStateToProps, mapDispatchToProps),
+)(PostListContainer)

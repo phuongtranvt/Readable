@@ -3,7 +3,7 @@ import serialize from 'form-serialize';
 import {connect} from'react-redux';
 import PropTypes from 'prop-types'
 import uuidv1 from 'uuid';
-import {updateCommentAction, createCommentAction} from '../../actions'
+import {updateComment, createComment} from '../../actions'
 
 class CommentForm extends Component {
   constructor(props) {
@@ -149,10 +149,7 @@ class CommentForm extends Component {
 
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  updateComment: (comment) => dispatch(updateCommentAction(comment)),
-  createComment: (comment) => dispatch(createCommentAction(comment))
-})
+const mapDispatchToProps = {updateComment, createComment}
 
 CommentForm.propTypes = {
   editingComment: PropTypes.object,

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import serialize from 'form-serialize';
 import {connect} from'react-redux'
+import {compose} from 'redux'
 import {withRouter} from 'react-router'
 import PropTypes from 'prop-types'
 import uuidv1 from 'uuid'
@@ -151,14 +152,13 @@ const mapStateToProps = ({categories, posts}, ownProps) => ({
   categories: Object.keys(categories),
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  createPost: (value) => dispatch(createPost(value)),
-  updatePost: (value) => dispatch(updatePost(value)),
-  fetchAllCategories: () => dispatch(fetchAllCategories()),
-})
+const mapDispatchToProps = {createPost, updatePost, fetchAllCategories}
 
 PostForm.propTypes = {
   editingPost: PropTypes.object,
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostForm))
+export default compose (
+  withRouter,
+  connect(mapStateToProps, mapDispatchToProps)
+)(PostForm)
