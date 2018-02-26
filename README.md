@@ -11,3 +11,4 @@ You can find the most recent version of this guide [here](https://github.com/fac
 * In another terminal, install and start the front end
     - `cd..`
     - `npm install`
+    - `npm run`	
