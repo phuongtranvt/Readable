@@ -37,9 +37,9 @@ class PostListContainer extends Component {
           </Link>
         </div>
 
-        <Typography noWrap type="headline">
+        <h3 style={{marginLeft: '5px'}}>
           {capitalize(category)} {category === ALL_CATEGORY ? 'categories' : 'category'}
-        </Typography>
+        </h3>
 
         <div className="sort-post">
           <Sort/>

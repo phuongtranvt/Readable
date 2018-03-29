@@ -8,6 +8,8 @@ import PostDetail from './posts/PostDetail';
 import PostNew from './posts/PostNew'
 import PostEdit from './posts/PostEdit'
 
+import ResponsiveDrawer from './ResponsiveDrawer'
+
 export default class App extends React.Component {
   render() {
     return (
