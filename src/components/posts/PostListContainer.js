@@ -37,7 +37,7 @@ class PostListContainer extends Component {
           </Link>
         </div>
 
-        <h3 style={{marginLeft: '5px'}}>
+        <h3 style={{marginLeft: '10px', marginTop: '0'}}>
           {capitalize(category)} {category === ALL_CATEGORY ? 'categories' : 'category'}
         </h3>
 
